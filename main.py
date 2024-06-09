@@ -1,14 +1,39 @@
 from flask import Flask, render_template, request, redirect, url_for, session
+import sqlite3
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+connection = sqlite3.connect("database.db", check_same_thread=False)
+c = connection.cursor()
+postdb = False
+
 
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///users.db"
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.secret_key = "123456789"
 postdb = False
 db = SQLAlchemy(app)
+# this is code for saving user's data
+def createTable():
+  query = '''
+ 			CREATE TABLE IF NOT EXISTS scores(
+	 		id INTEGER PRIMARY KEY AUTOINCREMENT,
+			userId INTEGER,
+	 		score INTEGER,
+			)'''
+  c.execute(query)
 
+  def add_score(userId, score):
+    query = "INSERT INTO scores (userId, score) VALUES (?, ?)"
+    c.execute(query, (userId, score))
+    connection.commit()
+
+  def get_scores():
+    query = "SELECT * FROM scores"
+    c.execute(query)
+    return c.fetchall()
+
+# this is code for logging in and registering
 class User(db.Model):
   id = db.Column(db.Integer, primary_key=True)
   username = db.Column(db.String(80), unique=True, nullable=False)
@@ -16,17 +41,7 @@ class User(db.Model):
 
   def __repr__(self):
     return '<User %r>' % self.username
-
-@app.route("/")
-def index():
-    db.create_all()
-    print(session)
-    return render_template("index.html")
-
-@app.route("/log")
-def log():
-    return render_template("form.html")
-
+  
 @app.route('/login', methods=["POST", "GET"])
 def login():
   if request.method == "POST":
@@ -69,6 +84,19 @@ def logout():
   if "username" in session:
     session.pop("username")
     return redirect('/')
+  
+
+@app.route("/")
+def index():
+    db.create_all()
+    print(session)
+    return render_template("index.html")
+
+@app.route("/log")
+def log():
+    return render_template("form.html")
+
+
 
 if __name__ == '__main__':  
    app.run(debug = True)

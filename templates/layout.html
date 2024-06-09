@@ -10,8 +10,13 @@
             <nav>
                 <ul>
                     <li><a href="/">Home</a></li>
-                    <li><a href="/login">Login</a></li>
-                    <li><a href="/register">register</a></li>
+                    {% if session['username'] %}
+                        <li>Hello, {{ session['username'] }}</li>
+                        <li><a href="/logout">Logout</a></li>
+                    {% else %}
+                        <li><a href="/login">Login</a></li>
+                        <li><a href="/register">register</a></li>
+                    {% endif %}
                     <li><button><a href="/log">Log your Emissions!</a></button></li>
                 </ul>
             </nav>
@@ -22,9 +27,7 @@
                 <div class="col-md-8">
                     {% block content %}{% endblock %}
                 </div>
-    
             </div>
         </main>
     </body>
 </html>
-
