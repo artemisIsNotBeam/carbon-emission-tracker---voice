@@ -92,11 +92,21 @@ def index():
     print(session)
     return render_template("index.html")
 
-@app.route("/log")
+@app.route("/log", methods=["POST","GET"])
 def log():
-    return render_template("form.html")
+    if request.method =="GET":
+      return render_template("form.html")
+    else:
+      eTime = int(request.form.get("eTime"))
+      eLights = int(request.form.get("eLights"))
+      vTime= int(request.form.get("vTime"))
+      foods = float(request.form.get("foods"))
+      score = (eTime *.06) + (eLights * .05) + (vTime * 6) + foods
+      return redirect(f"/results/{score}")
 
-
+@app.route("/results/<score>")
+def results(score):
+    return render_template("results.html", score=score)
 
 if __name__ == '__main__':  
    app.run(debug = True)

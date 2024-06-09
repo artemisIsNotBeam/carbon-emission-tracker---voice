@@ -13,51 +13,41 @@
 
         <p>Electric Usage</p>
 
-        <form>
+        <form action="/log" method="post">
             <label for="eTime">How many hours did you use electronics for today?</label><br>
             <input type="number" id="eTime" name="eTime" max="24" min='0'><br>
             <label for="eLights">How many hours did you leave your lights on for?</label><br>
             <input type="number" id="eLights" name="eLights" max="24" min ='0'>
-        </form>
+            <br>
 
-        <br>
+            <p>Vehicle Usage</p>
 
-        <p>Vehicle Usage</p>
-
-        <form>
+        
             <label for="vTime">How many hours did you spend using a personal vehicle?</label><br>
             <input type="number" id="vTime" name="vTime" max="24" min='0'><br>
             <label for="ptTime">How many hours did you spend in public transit?</label><br>
             <input type="number" id="ptTime" name="ptTime" max="24" min='0'><br>
+
+
+            <br>
+
+            <p>Foods</p>
+        
+            <label for="foods">How much meat did you eat today? </label>
+            
+            <select name="foods">
+                <option value="0">None at all</option>
+                <option value=".5">A little</option>
+                <option value="1.5">A moderate amount</option>
+                <option value="3">A little more than usual</option>
+                <option value="6">A ton</option>  
+            </select>
+
+            <br>
+            <input type="submit">
         </form>
 
         <br>
-
-        <p>Foods</p>
-
-        <form>
-            <label for="foods">How much meat did you eat today?</label><br>
-
-            <input type="radio" id="none" name="foods" value="none">
-            <label for="none">None at all</label>
-
-            <input type="radio" id="little" name="foods" value="alittle">
-            <label for="little">A little</label>
-
-            <input type="radio" id="mid" name="foods" value="mid">
-            <label for="mid">A moderate amount</label>
-
-            <input type="radio" id="littlemore" name="foods" value="littlem">
-            <label for="littleMore">A little more than usual</label>
-
-            <input type="radio" id="ton" name="foods" value="ton">
-            <label for="ton">A ton</label>
-
-        </form>
-
-        <br>
-
-
 
     </body>
 </html>
