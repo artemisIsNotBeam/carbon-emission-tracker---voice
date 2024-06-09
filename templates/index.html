@@ -1,5 +1,44 @@
-{% extends "layout.html" %}
-{% block content %}
-<h1>fun website :)</h1>
-
-{% endblock content %}
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Sproutsby</title>
+        <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
+    </head>
+    <body>
+        <style>
+            .top-right{
+                position: absolute;
+                top: 0;
+                right: 0;
+                padding: 20px;
+            }
+        </style>
+        <header>
+            <!-- <h1>Welcome to Sproutsby's Carbon Emission Tracker!</h1> -->
+            <img  src="/static/images/logo.png" height="300" width="600"/>
+            <p>Welcome! Track your carbon emissions and see how they compare across the map. Don't let Sproutsby down! </p>
+            <nav>
+                <ul>
+                    <a href="/">Home</a>
+                    {% if session['username'] %}
+                        <div class=top-right>
+                            <p>Hello, {{ session['username'] }}</p>
+                        </div>
+                        <a href="/logout">Logout    </a>
+                        <a href="/log">Log your Emissions!</a>
+                    {% else %}
+                        <a href="/login">Login</a>
+                        <a href="/register">register</a>
+                    {% endif %}
+                </ul>
+            </nav>
+        </header>
+        <main role="main" class="container">
+            <div class="row">
+                <div class="col-md-8">
+                    
+                </div>
+            </div>
+        </main>
+    </body>
+</html>
