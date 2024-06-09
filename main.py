@@ -18,20 +18,23 @@ def createTable():
   query = '''
  			CREATE TABLE IF NOT EXISTS scores(
 	 		id INTEGER PRIMARY KEY AUTOINCREMENT,
-			userId INTEGER,
-	 		score INTEGER,
-			)'''
+			userId VARCHAR(100),
+	 		score INTEGER
+  )'''
   c.execute(query)
 
-  def add_score(userId, score):
-    query = "INSERT INTO scores (userId, score) VALUES (?, ?)"
-    c.execute(query, (userId, score))
-    connection.commit()
+def add_score(userId, score):
+  query = "INSERT INTO scores (userId, score) VALUES (?, ?)"
+  c.execute(query, (userId, score))
+  connection.commit()
 
-  def get_scores():
-    query = "SELECT * FROM scores"
-    c.execute(query)
-    return c.fetchall()
+def get_scores(userId):
+  print(userId)
+  query = "SELECT * FROM scores WHERE userId = ?"
+  stuff = c.execute(query, [userId])
+  lines = stuff.fetchall()
+
+  return lines
 
 # this is code for logging in and registering
 class User(db.Model):
@@ -102,11 +105,14 @@ def log():
       vTime= int(request.form.get("vTime"))
       foods = float(request.form.get("foods"))
       score = (eTime *.06) + (eLights * .05) + (vTime * 6) + foods
+      print(add_score(session["username"], score))
       return redirect(f"/results/{score}")
 
 @app.route("/results/<score>")
 def results(score):
-    return render_template("results.html", score=score)
+    
+    return render_template("results.html", score=score, pastScores=get_scores(session["username"]))
 
 if __name__ == '__main__':  
+   createTable()
    app.run(debug = True)
