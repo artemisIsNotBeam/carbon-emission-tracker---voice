@@ -1,23 +1,25 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>fun website</title>
+        <title>Sproutsby</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
     </head>
     <body>
         <header>
-            <h1>Welcome to Sproutsby's Carbon Emission Tracker!</h1>
+            <!-- <h1>Welcome to Sproutsby's Carbon Emission Tracker!</h1> -->
+            <img  src="/static/images/logo.png" height="400" width="600"/>
+            <p>Welcome! Track your carbon emissions and see how they compare across the map. Most importantly, don't let Sproutsby down! </p>
             <nav>
                 <ul>
                     <li><a href="/">Home</a></li>
                     {% if session['username'] %}
                         <li>Hello, {{ session['username'] }}</li>
                         <li><a href="/logout">Logout</a></li>
+                        <li><button><a href="/log">Log your Emissions!</a></button></li>
                     {% else %}
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">register</a></li>
                     {% endif %}
-                    <li><button><a href="/log">Log your Emissions!</a></button></li>
                 </ul>
             </nav>
         </header>
