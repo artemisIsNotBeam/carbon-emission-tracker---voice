@@ -4,18 +4,20 @@
         <title>Sproutsby</title>
         <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">
     </head>
-    <body>
+    <body class="{{bodyclass}}">
         <header>
             <!-- <h1>Welcome to Sproutsby's Carbon Emission Tracker!</h1> -->
-            <img  src="/static/images/logo.png" height="400" width="600"/>
+            <img id="logoimg" src="/static/images/logo.png"/>
+            {% if session['username'] %}
+                <div class="top-right">Hello, {{ session['username'] }}</div>
+            {% endif %}
             <p>Welcome! Track your carbon emissions and see how they compare across the map. Most importantly, don't let Sproutsby down! </p>
             <nav>
-                <ul>
+                <ul id="nav">
                     <li><a href="/">Home</a></li>
                     {% if session['username'] %}
-                        <li>Hello, {{ session['username'] }}</li>
                         <li><a href="/logout">Logout</a></li>
-                        <li><button><a href="/log">Log your Emissions!</a></button></li>
+                        <li><a href="/log">Log your Emissions!</a></li>
                     {% else %}
                         <li><a href="/login">Login</a></li>
                         <li><a href="/register">register</a></li>
@@ -24,11 +26,7 @@
             </nav>
         </header>
         <main role="main" class="container">
-            <div class="row">
-                <div class="col-md-8">
-                    {% block content %}{% endblock %}
-                </div>
-            </div>
+            {% block content %}{% endblock %}
         </main>
     </body>
 </html>

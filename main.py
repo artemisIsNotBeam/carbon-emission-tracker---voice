@@ -93,7 +93,7 @@ def logout():
 def index():
     db.create_all()
     print(session)
-    return render_template("index.html")
+    return render_template("layout.html", bodyclass="home")
 
 @app.route("/log", methods=["POST","GET"])
 def log():
@@ -105,13 +105,15 @@ def log():
       vTime= int(request.form.get("vTime"))
       foods = float(request.form.get("foods"))
       score = (eTime *.06) + (eLights * .05) + (vTime * 6) + foods
+
       print(add_score(session["username"], score))
       return redirect(f"/results/{score}")
 
 @app.route("/results/<score>")
 def results(score):
+    pastScores = get_scores(session["username"])
     
-    return render_template("results.html", score=score, pastScores=get_scores(session["username"]))
+    return render_template("results.html", score=score, pastScores=pastScores)
 
 if __name__ == '__main__':  
    createTable()

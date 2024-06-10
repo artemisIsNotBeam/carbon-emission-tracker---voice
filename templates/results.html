@@ -1,5 +1,17 @@
 {% extends "layout.html" %}
 {% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='homepage.css') }}">    
 <h1>This is Sproutsby's reaction</h1>
-your score: {{score}}
+<div class="score" score="{{score}}"><p>your score: {{score}}</p></div>
+
+<h2>Past Scores</h2>
+<ul>
+{% if pastScores != "" %}
+    {% for pastScore in pastScores[::-1] %}
+        <li class="score" score="{{pastScore[2]}}"><p>{{pastScore[2]}}:</p></li>
+    {% endfor %}
+{% endif %}
+</ul>
+
+<script src="{{ url_for('static', filename='index.js') }}"></script>
 {% endblock content %}

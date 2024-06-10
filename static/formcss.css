@@ -1,5 +1,6 @@
 
 body {
     background-color: linear-gradient(rgba(169,212,187), rgba(172, 169, 212));
-    color:red;
+    color:rgb(77, 131, 68);
+    text-align: center;
 }
